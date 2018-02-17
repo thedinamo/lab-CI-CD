@@ -7,13 +7,15 @@ fi
 
 cd /tmp
 git clone git@github.com:thedinamo/lab-CI-CD.git
+cd lab-CI-CD
 git log > /var/lib/cicd/tmplog
 cd /var/lib/cicd
 if diff tmplog originlog > /dev/null
  then rm -rf /var/lib/cicd ; exit
 fi
 
-ansible-playbook playbook.yml
+
+ansible-playbook /tmp/lab-CI-CD/playbook.yml
 
 mv /var/lib/cicd/originlog /var/lib/cicd/tmplog
 rmdir /tmp
