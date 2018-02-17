@@ -15,5 +15,6 @@ fi
 
 ansible-playbook playbook.yml
 
-mv 
+mv /var/lib/cicd/originlog /var/lib/cicd/tmplog
+rmdir /tmp
 
