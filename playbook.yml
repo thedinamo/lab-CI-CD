@@ -1,0 +1,54 @@
+---
+- hosts: clones
+  tasks:
+
+   - name: install apache2
+     apt: 
+       name: apache2
+       state:  latest
+
+   - name: install nginx
+     apt:
+       name: nginx
+       state: latest 
+
+   - name: delete nginx conf
+     file:
+       path: /etc/nginx/sites-aviable/mysite.conf
+       state: absent
+
+   - name: delete apache conf
+     file:
+       path: /etc/apache2/sites-available/000-default.conf
+       state: absent
+
+   - name: delete site
+     file:
+       path: /var/www/html/index.html
+       state: absent
+
+   - name: copy nginx
+     copy: 
+       scr: /tmp/config/mysite.conf 
+       dest: /etc/nginx/sites-aviable/
+
+   - name: copy apache conf
+     copy: 
+       scr: /tmp/config/000-default.conf 
+       dest: /etc/apache2/sites-aviable/
+
+   - name: copy site
+     copy: 
+       scr: /tmp/index.html 
+       dest: /var/www/html/
+
+   - name: restart apache2
+     service:  
+       name: apache2
+       state: restarted
+
+   - name: restart nginx
+     service: 
+       name: nginx
+       state: restarted
+
